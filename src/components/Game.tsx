@@ -129,8 +129,25 @@ const Game = () => {
         style={{ touchAction: 'none' }}
       >
         <div className={`character ${direction === 'left' ? 'scale-x-[-1]' : ''}`}>
-          <div className="w-12 h-12 bg-blue-400 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105">
-            <div className="w-2 h-2 bg-white rounded-full transform translate-x-1 -translate-y-1" />
+          <div className="w-14 h-14 flex items-center justify-center">
+            {/* Star shape using SVG */}
+            <svg 
+              width="100%" 
+              height="100%" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg"
+              className="drop-shadow-lg"
+            >
+              <path 
+                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
+                fill="#FFD700" 
+                stroke="#FFC800" 
+                strokeWidth="0.5"
+              />
+              {/* Eye */}
+              <circle cx="9" cy="10" r="1" fill="black" />
+            </svg>
           </div>
         </div>
       </motion.div>
