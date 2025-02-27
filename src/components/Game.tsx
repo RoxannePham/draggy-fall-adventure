@@ -8,7 +8,6 @@ const Game = () => {
   const [direction, setDirection] = useState<'left' | 'right'>('right');
   const [isWalking, setIsWalking] = useState(true);
   const controls = useAnimation();
-  const walkingControls = useAnimation();
   const containerRef = useRef<HTMLDivElement>(null);
   const characterRef = useRef<HTMLDivElement>(null);
 
@@ -28,7 +27,6 @@ const Game = () => {
     setIsDragging(true);
     setIsWalking(false);
     controls.stop();
-    walkingControls.stop();
   };
 
   const handleDragEnd = () => {
@@ -60,7 +58,9 @@ const Game = () => {
     
     const container = containerRef.current.getBoundingClientRect();
     const character = characterRef.current.getBoundingClientRect();
-    const currentX = direction === 'right' ? character.x - container.x : character.x - container.x;
+    const characterElement = characterRef.current;
+    const rect = characterElement.getBoundingClientRect();
+    const currentX = rect.left - container.left;
     
     if (direction === 'right') {
       if (currentX + character.width >= container.width - 10) {
@@ -76,7 +76,7 @@ const Game = () => {
       ? Math.min(currentX + 100, container.width - character.width) 
       : Math.max(currentX - 100, 0);
     
-    await walkingControls.start({
+    await controls.start({
       x: targetX,
       transition: {
         type: "tween",
@@ -121,7 +121,7 @@ const Game = () => {
         dragMomentum={false}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        animate={[controls, walkingControls]}
+        animate={controls}
         onDrag={(event, info) => {
           setPosition({ x: info.point.x, y: info.point.y });
         }}
